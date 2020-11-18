@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Doc :3</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>"/>
   </head>
   <body>
     <div class="box"></div>
-    <script src="main.5d6e2636d73b736a0eae.js"></script>
+    <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
   </body>
 </html>
