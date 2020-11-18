@@ -40,7 +40,7 @@ bottomWall.x = 300;
 bottomWall.y = 0;
 app.stage.addChild(bottomWall);
 
-const containerRef: any = document.querySelector('.container');
+const containerRef: any = document.querySelector('.box');
 
 const portBox1 = document.createElement('div');
 const portBox2 = document.createElement('div');
