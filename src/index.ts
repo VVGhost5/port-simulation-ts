@@ -1,13 +1,12 @@
 
 
-import * as PIXI from 'pixi.js'
+// import * as PIXI from 'pixi.js'
 
+const PIXI = require("pixi.js");
 const TWEEN = require('@tweenjs/tween.js');
 
-import Ship from './ts/classShip';
-import Port from './ts/classPort';
-
-import './styles.css';
+import Ship from './ts/ClassShip';
+import Port from './ts/ClassPort';
 
 const app = new PIXI.Application({
   width: 800, height: 600, backgroundColor: 0x1099bb, resolution: window.devicePixelRatio || 1,
@@ -40,32 +39,78 @@ bottomWall.x = 300;
 bottomWall.y = 0;
 app.stage.addChild(bottomWall);
 
-const containerRef: any = document.querySelector('.box');
+let portBox1Empty = new Graphics();
+portBox1Empty.lineStyle(4, 0x000000, 1);
+portBox1Empty.beginFill(0xffffff);
+portBox1Empty.drawRect(0, 72, 24, 60);
+portBox1Empty.endFill();
+portBox1Empty.visible = true;
+app.stage.addChild(portBox1Empty);
 
-const portBox1 = document.createElement('div');
-const portBox2 = document.createElement('div');
-const portBox3 = document.createElement('div');
-const portBox4 = document.createElement('div');
-portBox1.classList.add('port');
-portBox1.classList.add('port-1');
-portBox2.classList.add('port');
-portBox2.classList.add('port-2');
-portBox3.classList.add('port');
-portBox3.classList.add('port-3');
-portBox4.classList.add('port');
-portBox4.classList.add('port-4');
-containerRef.appendChild(portBox1);
-containerRef.appendChild(portBox2);
-containerRef.appendChild(portBox3);
-containerRef.appendChild(portBox4);
+let portBox1Full = new Graphics();
+portBox1Full.lineStyle(4, 0x000000, 1);
+portBox1Full.beginFill(0xffd700);
+portBox1Full.drawRect(0, 72, 24, 60);
+portBox1Full.endFill();
+portBox1Full.visible = false;
+app.stage.addChild(portBox1Full);
+
+let portBox2Empty = new Graphics();
+portBox2Empty.lineStyle(4, 0x000000, 1);
+portBox2Empty.beginFill(0xffffff);
+portBox2Empty.drawRect(0, 204, 24, 60);
+portBox2Empty.endFill();
+portBox2Empty.visible = true;
+app.stage.addChild(portBox2Empty);
+
+let portBox2Full = new Graphics();
+portBox2Full.lineStyle(4, 0x000000, 1);
+portBox2Full.beginFill(0xffd700);
+portBox2Full.drawRect(0, 204, 24, 60);
+portBox2Full.endFill();
+portBox2Full.visible = false;
+app.stage.addChild(portBox2Full);
+
+let portBox3Empty = new Graphics();
+portBox3Empty.lineStyle(4, 0x000000, 1);
+portBox3Empty.beginFill(0xffffff);
+portBox3Empty.drawRect(0, 336, 24, 60);
+portBox3Empty.endFill();
+portBox3Empty.visible = true;
+app.stage.addChild(portBox3Empty);
+
+let portBox3Full = new Graphics();
+portBox3Full.lineStyle(4, 0x000000, 1);
+portBox3Full.beginFill(0xffd700);
+portBox3Full.drawRect(0, 336, 24, 60);
+portBox3Full.endFill();
+portBox3Full.visible = false;
+app.stage.addChild(portBox3Full);
+
+let portBox4Empty = new Graphics();
+portBox4Empty.lineStyle(4, 0x000000, 1);
+portBox4Empty.beginFill(0xffffff);
+portBox4Empty.drawRect(0, 468, 24, 60);
+portBox4Empty.endFill();
+portBox4Empty.visible = true;
+app.stage.addChild(portBox4Empty);
+
+let portBox4Full = new Graphics();
+portBox4Full.lineStyle(4, 0x000000, 1);
+portBox4Full.beginFill(0xffd700);
+portBox4Full.drawRect(0, 468, 24, 60);
+portBox4Full.endFill();
+portBox4Full.visible = false;
+app.stage.addChild(portBox4Full);
 
 let port1 = new Port(1, 48);
 let port2 = new Port(2, 0.3);
 let port3 = new Port(3, 2.8);
 let port4 = new Port(4, 2.3);
 
-const portBoxesArray: any = [portBox1, portBox2, portBox3, portBox4];
-const portsArray: Port[] = [port1, port2, port3, port4];
+const portEmptyBoxesArray = [portBox1Empty, portBox2Empty, portBox3Empty, portBox4Empty];
+const portFullBoxesArray = [portBox1Full, portBox2Full, portBox3Full, portBox4Full];
+const portsArray = [port1, port2, port3, port4];
 
 window.onload = function () {
   createShip(getRandomInt());
@@ -73,8 +118,8 @@ window.onload = function () {
   animate()
 }
 
-
-function moveShip(ship: any, positionLeft: any, positionTop: any) {
+//Функция движение корабля ship в координаты x и y
+function moveShip(ship: Ship, positionLeft: number, positionTop: number) {
 
   let tween1 = new TWEEN.Tween({ left: `${ship.x}`, top: `${ship.y}` })
 
@@ -88,12 +133,14 @@ function moveShip(ship: any, positionLeft: any, positionTop: any) {
   updateBox(ship, { left: `${ship.y}`, top: `${ship.x}` })
 }
 
+//Функция анимации передвижения корабля
 function animate(time?: any) {
 
   requestAnimationFrame(animate)
   TWEEN.update(time)
 }
 
+//Функция получения случайного числа (0-1) и определение какой тип корабля появится (red или green)  
 function getRandomInt() {
   let result = Math.floor(Math.random() * Math.floor(2));
   if (result) {
@@ -102,6 +149,7 @@ function getRandomInt() {
   return { type: 'red', isLoaded: true, color: 0xff0000, bg: 0xff0000, direction: 'toPort' }
 }
 
+//Функция создания нового корабля
 function createShip(paramsObject: any) {
   shipsIDArray.push('ship');
   let newShip: any = new Graphics();
@@ -126,18 +174,8 @@ function createShip(paramsObject: any) {
   return newShip;
 }
 
-function choosePortOrBaypass(ship: any) {
-  if (ship.type === 'red') {
-    let filteredPort = portsArray.find(el => el.isFull === false && el.isOccupied === false);
-    filteredPort ? moveShip(ship, 270, 290) : moveShip(ship, 700, 240);
-    return;
-  }
-  let filteredPort = portsArray.find(el => el.isFull === true && el.isOccupied === false);
-  filteredPort ? moveShip(ship, 270, 290) : moveShip(ship, 700, 240);
-  return;
-}
-
-function checkBaypass(ship: any) {
+//Функция проверки места в очереди кораблей, и в зависимости от порядка в массиве отправление в нужное место ожидания
+function checkBaypass(ship: Ship) {
   if (ship.x === 700 && ship.y === 240) {
     switch (shipsInQueue.length) {
       case 0: {
@@ -164,11 +202,12 @@ function checkBaypass(ship: any) {
   }
 }
 
-function definePort(portsArray: any[], ship: any) {
-  ship.type === "red" ? checkforFreePorts(portsArray, ship) : checkforLoadedPorts(portsArray, ship);
+//Функция определения свободных портов, в зависимости от типа корабля
+function definePort(portsArray: Port[], ship: Ship) {
+  ship.type === "red" ? checkForFreePorts(portsArray, ship) : checkForLoadedPorts(portsArray, ship);
 }
-
-function checkforFreePorts(portsArray: any[], ship: any) {
+//Функция для red-кораблей, при нахождение пустого и не занятого порта, корабль отправляется в данный порт 
+function checkForFreePorts(portsArray: Port[], ship: Ship) {
   let filteredPort = portsArray.find(el => el.isFull === false && el.isOccupied === false);
   if (!filteredPort) {
     moveShip(ship, 700, 240);
@@ -181,8 +220,9 @@ function checkforFreePorts(portsArray: any[], ship: any) {
   return filteredPort;
 }
 
-function checkforLoadedPorts(portsArray: any[], ship: any) {
-  let filteredPort: any = portsArray.find(el => el.isFull === true && el.isOccupied === false);
+//Функция для green-кораблей, при нахождение полного и не занятого порта, корабль отправляется в данный порт 
+function checkForLoadedPorts(portsArray: Port[], ship: Ship) {
+  let filteredPort: Port = portsArray.find(el => el.isFull === true && el.isOccupied === false);
   if (!filteredPort) {
     moveShip(ship, 700, 240);
     ship.rotation = 48;
@@ -194,14 +234,16 @@ function checkforLoadedPorts(portsArray: any[], ship: any) {
   return filteredPort;
 }
 
-function switchActionsInPort(ship: any, port: any) {
+//Функция, которая в зависимости от типа корабля, вызывает функцию загрузки или выгрузки корабля
+function switchActionsInPort(ship: Ship, port: Port) {
   (ship.type === "red") ? ShipUnloading(ship, port) : ShipLoading(ship, port);
 }
 
-function ShipUnloading(ship: any, port: any) {
-
+//Функция выгрузки корабля
+function ShipUnloading(ship: Ship, port: Port) {
   ship.tint = 0x000000;
-  portBoxesArray[`${portsArray.indexOf(port)}`].style.backgroundColor = 'rgb(255, 215, 0)';
+  portEmptyBoxesArray[portsArray.indexOf(port)].visible = false;
+  portFullBoxesArray[portsArray.indexOf(port)].visible = true;
   port.isFull = true;
   ship.isLoaded = false;
   moveShip(ship, 270, 330);
@@ -209,10 +251,12 @@ function ShipUnloading(ship: any, port: any) {
   ship.rotation = port.incline;
 }
 
-function ShipLoading(ship: any, port: any) {
+//Функция загрузки корабля
+function ShipLoading(ship: Ship, port: Port) {
 
   ship.tint = 0x00ff00;
-  portBoxesArray[`${portsArray.indexOf(port)}`].style.backgroundColor = 'rgb(255, 255, 255)';
+  portFullBoxesArray[portsArray.indexOf(port)].visible = false;
+  portEmptyBoxesArray[portsArray.indexOf(port)].visible = true;
   port.isFull = false;
   ship.isLoaded = true;
   moveShip(ship, 270, 330);
@@ -220,7 +264,8 @@ function ShipLoading(ship: any, port: any) {
   ship.rotation = port.incline;
 }
 
-function checkPoint1(ship: any) {
+//Функция, которая в зависимости от свойства gointPort корабля отпределяет в какой порт двигатся кораблю
+function checkPoint1(ship: Ship) {
   if (ship.x === 270 && ship.y === 290) {
     switch (ship.goingToPort) {
       case 1:
@@ -243,8 +288,8 @@ function checkPoint1(ship: any) {
     }
   }
 }
-
-function checkPoint1back(ship: any) {
+//Функция, которая отвечает за возвращение корабля обратно в море
+function checkPoint1Back(ship: Ship) {
   if (ship.x === 270 && ship.y === 330) {
     ship.rotation = 0;
     moveShip(ship, 760, 330);
@@ -252,7 +297,8 @@ function checkPoint1back(ship: any) {
   }
 }
 
-function checkPort(ship: any) {
+//Функция которая проверяет наличие корабля в порту, и вызывает функцию проверки типа корабля и через 5 сек выполняет эту функцию
+function checkPort(ship: Ship) {
   if (ship.x === 60 && ship.y === 120) {
     ship.rotation = 0;
 
@@ -272,7 +318,8 @@ function checkPort(ship: any) {
   }
 }
 
-function hideShip(ship: any) {
+//Функция, которая отвечает за исчезновение корабля с поля
+function hideShip(ship: Ship) {
   if (ship.x === 760 && ship.y === 330) {
     ship.width = 0;
     ship.height = 0;
@@ -281,7 +328,8 @@ function hideShip(ship: any) {
   }
 }
 
-function checkShipsInQueue(ship: any) {
+//Функция которая проверяет, или освободился нужный порт для 1 корабля в очереди, и отправляет корабль в освободившийся порт
+function checkShipsInQueue(ship: Ship) {
   if (ship.x === 400 && ship.y === 240) {
     if (ship.type === 'green') {
       let filteredPort = portsArray.find(el => !el.isOccupied && el.isFull)
@@ -306,11 +354,12 @@ function checkShipsInQueue(ship: any) {
     }
   }
 
+  //Функция, которая определяет тип корабля, и в зависимости от типа назначает значение свойству goingToPort кораблю
   function definePortAfterQueue(portsArray: Port[], ship: Ship) {
-    ship.type === "red" ? checkforFreePortsAfterQueue(portsArray, ship) : checkforLoadedPortsAfterQueue(portsArray, ship);
+    ship.type === "red" ? checkForFreePortsAfterQueue(portsArray, ship) : checkForLoadedPortsAfterQueue(portsArray, ship);
   }
-
-  function checkforFreePortsAfterQueue(portsArray: Port[], ship: Ship) {
+//Функция которая проверяет свободный порт для red-корабля, и назначет ему значение для свойства goingToPort
+  function checkForFreePortsAfterQueue(portsArray: Port[], ship: Ship) {
     let filteredPort = portsArray.find(el => el.isFull === false && el.isOccupied === false);
     if (!filteredPort) {
       return;
@@ -320,7 +369,8 @@ function checkShipsInQueue(ship: any) {
     return filteredPort;
   }
 
-  function checkforLoadedPortsAfterQueue(portsArray: Port[], ship: Ship) {
+  //Функция которая проверяет свободный порт для green-корабля, и назначет ему значение для свойства goingToPort
+  function checkForLoadedPortsAfterQueue(portsArray: Port[], ship: Ship) {
     let filteredPort = portsArray.find(el => el.isFull === true && el.isOccupied === false);
     if (!filteredPort) {
       return;
@@ -331,12 +381,13 @@ function checkShipsInQueue(ship: any) {
   }
 }
 
-function updateBox(box: any, params: any) {
+//Функция, которая делает постоянную проверку условий всех функций внутри неё, и обеспечивает анимацию передвижения кораблей
+function updateBox(box: Ship, params: any) {
   box.x = params.left;
   box.y = params.top;
   checkPoint1(box);
   checkPort(box);
-  checkPoint1back(box);
+  checkPoint1Back(box);
   checkPoint1(box);
   hideShip(box);
   checkBaypass(box);

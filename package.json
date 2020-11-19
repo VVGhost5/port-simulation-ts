@@ -4,13 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack",
+    "start": "webpack-dev-server --env.mode development --config ./webpack.config.js",
     "build": "webpack --env.mode production --config ./webpack.config.js",
-    "predeploy": "npm run dist",
-    "deploy": "gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VVGhost5/port-simulation-ts.git"
+  },
+  "keywords": [],
+  "author": "Vladyslav Bahrii <vvghost@ukr.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VVGhost5/port-simulation-ts.git/issues"
+  },
+  "homepage": "https://github.com/VVGhost5/port-simulation-ts",
   "devDependencies": {
     "autoprefixer": "^8.6.0",
     "awesome-typescript-loader": "^5.2.0",
@@ -19,6 +28,7 @@
     "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^3.2.0",
+    "gh-pages": "^3.1.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.14.1",
