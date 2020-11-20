@@ -1,3 +1,6 @@
+
+import { PIXI, app, Graphics, updateBox, TWEEN, shipsArray, shipsIDArray, portsArray } from '../index';
+
 class Ship {
     id: number
     type: string
@@ -24,6 +27,22 @@ class Ship {
         this.width;
         this.height;
     }
+
+public moveShip(ship: Ship, positionLeft: number, positionTop: number) {
+
+  let tween1 = new TWEEN.Tween({ left: `${ship.x}`, top: `${ship.y}` })
+
+    .to({ left: `${positionLeft}`, top: `${positionTop}` }, 4000)
+    .easing(TWEEN.Easing.Linear.None)
+    .onUpdate(function (object: any) {
+      updateBox(ship, object)
+    })
+    .start()
+
+  updateBox(ship, { left: `${ship.y}`, top: `${ship.x}` })
 }
+}
+
+
 
 export default Ship;
