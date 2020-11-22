@@ -4,7 +4,10 @@ Wellcome to Port-simulator !)
 -----------------------------
 ---DESCRIPTION---
 
-In this program, you can see the work of the ports and ships. Green ships are initially empty and red, on the contrary, full. Ships go to the ports and start either loading or unloading. Important rule: red ships can unload only in empty ports, and green ships can load only in full ports. If all ports are occupied, or there aren't full ports for green ships, or there aren't empty ports for red ships, they come to the bypass, where they wait for their turn. When a ship finished its business in port, it returns to sea and disappears from the game field.
+In this program, you can see the work of the ports and ships. Green ships are initially empty and red, on the contrary, full. Ships go to the ports and start either loading
+or unloading. Important rule: red ships can unload only in empty ports, and green ships can load only in full ports. If all ports are occupied, or there aren't full ports for 
+green ships, or there aren't empty ports for red ships, they come to the bypass, where they wait for their turn. When a ship finished its business in port, it returns to sea 
+and disappears from the game field.
 
 ---SETUP---
 
