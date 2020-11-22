@@ -13,11 +13,10 @@ and disappears from the game field.
 
 1.Download this repository on your device.
 
-2.Use command npm install
+2.Use command npm install to install all the necessary packages.
 ```
 $ npm install
 ```
-to install all the necessary packages.
 
 3.Use command npm start, to start the program.
 ```
